@@ -1,0 +1,2 @@
+include ':app', ':authutil', ':commonutils'
+project(':commonutils').projectDir = new File('../CommonUtils/commonutils')
