@@ -1,4 +1,4 @@
-package com.br.authutil;
+package com.br.authutil.helper.fingerprint;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -12,7 +12,11 @@ import android.support.annotation.RequiresPermission;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v4.os.CancellationSignal;
 
+import com.br.authutil.R;
+import com.br.authutil.data.AuthData;
+import com.br.authutil.data.AuthType;
 import com.br.authutil.dialog.FingerprintDialog;
+import com.br.authutil.provider.AuthCallback;
 import com.br.commonutils.util.CommonUtil;
 
 import java.security.KeyStore;
@@ -22,7 +26,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 @TargetApi(Build.VERSION_CODES.M)
-public class FingerprintAuth extends FingerprintManagerCompat.AuthenticationCallback {
+public class Fingerprint extends FingerprintManagerCompat.AuthenticationCallback {
 
     private static final String ANDROID_KEYSTORE = "AndroidKeyStore";
     private static FingerprintManagerCompat fingerprintManagerCompat;
@@ -35,7 +39,7 @@ public class FingerprintAuth extends FingerprintManagerCompat.AuthenticationCall
     private boolean showDialog;
     private FingerprintDialog fingerprintDialog;
 
-    private FingerprintAuth(Context context, AuthCallback authCallback) throws Exception {
+    private Fingerprint(Context context, AuthCallback authCallback) throws Exception {
         super();
         this.context = context;
         this.authCallback = authCallback;
@@ -47,7 +51,7 @@ public class FingerprintAuth extends FingerprintManagerCompat.AuthenticationCall
     }
 
     @RequiresPermission(anyOf = {Manifest.permission.USE_FINGERPRINT, Manifest.permission.USE_BIOMETRIC})
-    public static FingerprintAuth with(@NonNull Context context, @NonNull AuthCallback authCallback) throws Exception {
+    public static Fingerprint with(@NonNull Context context, @NonNull AuthCallback authCallback) throws Exception {
         KeyguardManager keyguardManager = context.getSystemService(KeyguardManager.class);
         if (!keyguardManager.isKeyguardSecure())
             authCallback.authFailed("Secure lock screen hasn't set up. Go to 'Settings -> Security -> Fingerprint' to set up a fingerprint");
@@ -60,10 +64,10 @@ public class FingerprintAuth extends FingerprintManagerCompat.AuthenticationCall
         if (!fingerprintManagerCompat.hasEnrolledFingerprints())
             authCallback.authFailed("Go to 'Settings -> Security -> Fingerprint' and register at least one fingerprint");
 
-        return new FingerprintAuth(context, authCallback);
+        return new Fingerprint(context, authCallback);
     }
 
-    public FingerprintAuth showDialog(boolean showDialog) {
+    public Fingerprint showDialog(boolean showDialog) {
         this.showDialog = showDialog;
         return this;
     }
@@ -73,7 +77,7 @@ public class FingerprintAuth extends FingerprintManagerCompat.AuthenticationCall
         FingerprintManagerCompat.CryptoObject cryptoObject = new FingerprintManagerCompat.CryptoObject(cipher);
         CancellationSignal cancellationSignal = new CancellationSignal();
 
-        fingerprintManagerCompat.authenticate(cryptoObject, 0, cancellationSignal, FingerprintAuth.this, null);
+        fingerprintManagerCompat.authenticate(cryptoObject, 0, cancellationSignal, Fingerprint.this, null);
         showDialogIfNeeded();
     }
 
@@ -142,7 +146,7 @@ public class FingerprintAuth extends FingerprintManagerCompat.AuthenticationCall
         super.onAuthenticationSucceeded(result);
 
         fingerprintDialog.dismiss();
-        authCallback.authSucceeded();
+        authCallback.authSucceeded(AuthType.FINGER_PRINT, new AuthData());
     }
 
     @Override
