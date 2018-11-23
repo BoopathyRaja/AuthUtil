@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_top_cornered"
+    android:padding="@dimen/padding_15">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/bottomSheetFingerprint_imageView_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bottomSheetFingerprint_imageView_icon"
+        android:layout_marginTop="@dimen/margin_5"
+        android:orientation="vertical">
+
+        <com.br.commonutils.view.textview.TextView
+            android:id="@+id/bottomSheetFingerprint_textView_title"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/lightTextPrimary"
+            app:fontMode="Normal"
+            app:fontType="Roboto_Medium" />
+
+        <com.br.commonutils.view.textview.TextView
+            android:id="@+id/bottomSheetFingerprint_textView_subTitle"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/lightTextHint"
+            app:fontMode="Normal"
+            app:fontType="Roboto_Light" />
+
+        <com.br.commonutils.view.textview.TextView
+            android:id="@+id/bottomSheetFingerprint_textView_description"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_20"
+            android:singleLine="false"
+            app:fontMode="Normal"
+            app:fontType="Roboto_Regular" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/bottomSheetFingerprint_button_cancel"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

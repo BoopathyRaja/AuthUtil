@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.br.commonutils.R;
+import com.br.authutil.R;
 import com.br.commonutils.provider.DialogNegativeCallback;
 import com.br.commonutils.util.CommonUtil;
 import com.br.commonutils.validator.Validator;
