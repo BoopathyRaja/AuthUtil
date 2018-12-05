@@ -54,15 +54,15 @@ public class Fingerprint extends FingerprintManagerCompat.AuthenticationCallback
     public static Fingerprint with(@NonNull Context context, @NonNull AuthCallback authCallback) throws Exception {
         KeyguardManager keyguardManager = context.getSystemService(KeyguardManager.class);
         if (!keyguardManager.isKeyguardSecure())
-            authCallback.authFailed("Secure lock screen hasn't set up. Go to 'Settings -> Security -> Fingerprint' to set up a fingerprint");
+            throw new Exception("Secure lock screen hasn't set up. Go to 'Settings -> Security -> Fingerprint' to set up a fingerprint");
 
         fingerprintManagerCompat = FingerprintManagerCompat.from(context);
 
         if (!fingerprintManagerCompat.isHardwareDetected())
-            authCallback.authFailed("Your Device does not have a Fingerprint Sensor");
+            throw new Exception("Your Device does not have a Fingerprint Sensor");
 
         if (!fingerprintManagerCompat.hasEnrolledFingerprints())
-            authCallback.authFailed("Go to 'Settings -> Security -> Fingerprint' and register at least one fingerprint");
+            throw new Exception("Go to 'Settings -> Security -> Fingerprint' and register at least one fingerprint");
 
         return new Fingerprint(context, authCallback);
     }
